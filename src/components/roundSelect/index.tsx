@@ -40,7 +40,7 @@ const RoundSelect = React.forwardRef<HTMLDivElement, RoundSelectProps>(
 			if(!options)
 				return ""
 
-			let index = options?.findIndex(option => option.value = value)
+			let index = options?.findIndex(option => option.value === value)
 
 			return index === -1 ? "" : options[index].label
 		}
@@ -74,6 +74,8 @@ const RoundSelect = React.forwardRef<HTMLDivElement, RoundSelectProps>(
 			setShowOptions(false)
 			// console.log(e.target)
 		}
+
+		console.log(value)
 
 		return (
 			<div

@@ -27,5 +27,17 @@ export const ja = {
 	},
 	allProducts: {
 		title: "すべての"
-	}
+	},
+	productDetails: {
+		"price": "Current Price:",
+		"description": "Description:",
+		"bookmarks": {
+			"add": "ブックマークに追加",
+			"remove": "ブックマークから削除",
+		},
+		"cart": {
+			"add": "カートに入れる",
+			"remove": "カートから削除",
+		},
+	},
 }
