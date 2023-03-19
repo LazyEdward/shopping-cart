@@ -28,5 +28,17 @@ export const zhCHT = {
 	},
 	allProducts: {
 		title: "所有"
-	}
+	},
+	productDetails: {
+		"price": "Current Price:",
+		"description": "Description:",
+		"bookmarks": {
+			"add": "加入書籤",
+			"remove": "從書籤中移除",
+		},
+		"cart": {
+			"add": "加入購物車",
+			"remove": "從購物車中移除",
+		},
+	},
 }

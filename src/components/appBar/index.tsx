@@ -1,4 +1,4 @@
-import FullPageLoader from "components/FullPageLoader"
+import FullPageModal from "components/FullPageModal"
 import { CloseButton } from "components/icon/close"
 import { MenuButton } from "components/icon/menu"
 import { SearchButton } from "components/icon/search"
@@ -19,6 +19,7 @@ const AppBar = () => {
 
 	const toHomepage = () => {
 		navigate("home")
+		setOpenMenu(false)
 	}
 
 	return (
@@ -41,29 +42,6 @@ const AppBar = () => {
 						searchInput={searchInput}
 						onChange={(e:any) => setSearchInput(e.target.value)}
 					/>
-					{/* <div className={`${openSearch ? "w-[175px] md:w-[250px] opacity-100 transition-all" : "w-0 opacity-0"}  mx-2`}>
-						<RoundInput
-							className="w-full"
-							placeholder="Search goods you want..."
-							value={searchInput}
-							onChange={(e:any) => setSearchInput(e.target.value)}
-						/>
-					</div>
-					{openSearch ?
-							<span
-								className="p-2 mr-2 cursor-pointer rounded-lg hover:shadow-md bg-green-700"
-								onClick={(e) => setOpenSearch(false)}
-							>
-								<CloseButton className="w-[25px] h-[25px]"/>
-							</span>
-						:
-							<span
-								className="p-2 mr-2 cursor-pointer rounded-lg hover:shadow-md bg-green-700"
-								onClick={(e) => setOpenSearch(true)}
-							>
-								<SearchButton className="w-[25px] h-[25px]"/>
-							</span>
-					} */}
 					<span
 						className="p-2 cursor-pointer rounded-lg hover:shadow-md bg-green-700"
 						onClick={(e) => setOpenMenu(!openMenu)}
@@ -72,7 +50,7 @@ const AppBar = () => {
 					</span>
 				</div>
 			</span>
-			<FullPageLoader
+			<FullPageModal
 				active={openMenu}
 				level="z-[5000]"
 				className="portal-content"
@@ -83,7 +61,7 @@ const AppBar = () => {
 						onSelect={() => setOpenMenu(false)}
 					/>
 				</div>
-			</FullPageLoader>
+			</FullPageModal>
 		</div>
 	)
 }

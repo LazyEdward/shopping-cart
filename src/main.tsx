@@ -13,7 +13,7 @@ import "./i18n.tsx"
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename="/shopping-cart">
       <App />
     </BrowserRouter>
   </Provider>

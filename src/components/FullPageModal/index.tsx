@@ -9,7 +9,7 @@ type FullPageLoaderProps = {
 	children?: React.ReactNode | null,
 }
 
-const FullPageLoader = ({
+const FullPageModal = ({
 	active,
 	className,
 	level,
@@ -32,18 +32,18 @@ const FullPageLoader = ({
 	)
 }
 
-FullPageLoader.propTypes = {
+FullPageModal.propTypes = {
 	active: PropTypes.bool,
 	className: PropTypes.string,
 	level: PropTypes.string,
 	children: PropTypes.node,
 }
 
-FullPageLoader.defaultProps = {
+FullPageModal.defaultProps = {
 	active: true,
 	className: "",
 	level: "z-[9999]",
 	children: null,
 }
 
-export default FullPageLoader
+export default FullPageModal

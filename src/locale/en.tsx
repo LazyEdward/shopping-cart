@@ -26,6 +26,18 @@ export const en = {
 
 	},
 	allProducts: {
-		title: "All "
-	}
+		"title": "All "
+	},
+	productDetails: {
+		"price": "Current Price:",
+		"description": "Description:",
+		"bookmarks": {
+			"add": "Add to bookmarks",
+			"remove": "Remove from bookmarks",
+		},
+		"cart": {
+			"add": "Add to cart",
+			"remove": "Remove from cart",
+		},
+	},
 }
