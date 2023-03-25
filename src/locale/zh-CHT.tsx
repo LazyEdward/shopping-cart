@@ -20,7 +20,8 @@ export const zhCHT = {
 			"cart": "購物車",
 		},		
 		options: {
-			"noOptions" : "沒有可用的選項"
+			"noOptions" : "沒有可用的選項",
+			"more": "更多的",
 		},
 	},
 	dashboard: {

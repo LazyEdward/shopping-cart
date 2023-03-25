@@ -1,23 +1,15 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { GLASS_IMAGES, PLANT_IMAGES, productDataFormat, RING_IMAGES } from 'data/images'
-import { RootState } from './store'
-import { fakeGetDashboard } from 'request/dashboard'
-import { fakeGetProducts } from 'request/allProducts'
-
-export type ProductCategoryType = "newArrivals" | "limitedOffers" | "rings" | "glasses" | "plants"
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { productTagFormat, productDataFormat } from 'data'
+import { fakeGetProductByCategory } from 'request/allProducts'
+import { DefaultAsyncStatus } from 'types'
 
 export type CurrentProductData = {
-	category: ProductCategoryType,
+	category: productTagFormat,
 	products: productDataFormat[],
 }
 
-export type AllProductsStatus = {
-	loading: boolean,
-	error: string | null
-}
-
-export type AllProductsState = CurrentProductData & AllProductsStatus
+export type AllProductsState = CurrentProductData & DefaultAsyncStatus
 
 const initialState: AllProductsState = {
 	category: "newArrivals",
@@ -29,11 +21,11 @@ const initialState: AllProductsState = {
 export const getProducts = createAsyncThunk("allProducts/getProducts", async (data: any, thunkAPI) => {
 	try {
 		console.log("getFakeGetProducts")
-		let res = await fakeGetProducts(data.category)
+		let res = await fakeGetProductByCategory(data.category, 10)
 
 		console.log(res)
 
-		return res
+		return {category: data.category, res: res}
 	}
 	catch (err: any) {
 		return thunkAPI.rejectWithValue(err.message)
@@ -44,7 +36,7 @@ export const AllProductsSlice = createSlice({
 	name: 'allProducts',
 	initialState,
 	reducers: {
-		selectCategory: (state, action: PayloadAction<ProductCategoryType>) => {
+		selectCategory: (state, action: PayloadAction<productTagFormat>) => {
 			state.category = action.payload
 		}
 	},
@@ -58,7 +50,7 @@ export const AllProductsSlice = createSlice({
 				state.loading = false
 				state.error = null
 				state.category = action.payload.category
-				state.products = action.payload.products
+				state.products = action.payload.res.products[action.payload.category]
 			}).addCase(getProducts.rejected, (state, action: PayloadAction<any>) => {
 				state.loading = false
 				state.error = action.payload

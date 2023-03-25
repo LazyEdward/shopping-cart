@@ -1,28 +1,60 @@
 import PropTypes from 'prop-types';
 
-import CardImage from "components/card/cardImage"
-import { productDataFormat, productDescriptionFormat, productTitleFormat } from "data/images"
-import { useTranslation } from 'react-i18next';
-import { priceFormater } from 'utils';
-import ProductDetails from './productDetails';
-import FullPageModal from 'components/FullPageModal';
 import Card from 'components/card';
+import FullPageModal from 'components/FullPageModal';
 import { CloseButton } from 'components/icon/close';
-import RoundButton, { RoundButtonTheme } from 'components/roundButton';
-import { CartButton } from 'components/icon/cart';
-import { BookmarkButton } from 'components/icon/bookmark';
+import { productDataFormat } from "data";
+import { useSelector } from 'react-redux';
+import { getCurrentProduct, getCurrentProducts, getError, getLoading } from 'store/productDetails';
+import { RootState } from 'store/store';
+import ProductDetails from './productDetails';
+import { useEffect, useRef } from 'react';
+
+const useProductDetails = () => {
+	const {
+		product,
+		productList,
+		loading,
+		error,
+	} = useSelector((state: RootState) => ({
+		product: getCurrentProduct(state.productDetails),
+		productList: getCurrentProducts(state.productDetails),
+		loading: getLoading(state.productDetails),
+		error: getError(state.productDetails),
+	}))
+
+	return {
+		product,
+		productList,
+		loading,
+		error,
+	}
+}
 
 type ProductModalProps = {
-	product: productDataFormat | null,
+	onSelectOtherProduct?: (product: productDataFormat) => void,
 	closeModal?: () => void,
 }
 
 const ProductModal = ({
-	product,
+	onSelectOtherProduct,
 	closeModal,
 }: ProductModalProps) => {
 
-	const { t, i18n } = useTranslation()
+	const {
+		product,
+		productList,
+		loading,
+		error
+	} = useProductDetails()
+
+	const detailRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if(detailRef.current){
+			detailRef.current.scrollTop = 0
+		}
+	}, [product])
 
 	return (
 		<FullPageModal
@@ -38,8 +70,8 @@ const ProductModal = ({
 							<div className='w-full h-[35px] flex justify-end'>
 								<span className="p-2 cursor-pointer" onClick={closeModal}><CloseButton className="w-[25px] h-[25px]"/></span>
 							</div>
-							<div className='w-full h-[calc(100%-35px)] flex flex-col overflow-y-auto'>
-								<ProductDetails product={product}/>
+							<div ref={detailRef} className='w-full h-[calc(100%-35px)] flex flex-col overflow-y-auto'>
+								<ProductDetails loading={loading} onSelect={onSelectOtherProduct} product={product} productList={productList}/>
 							</div>
 						</Card>
 					</div>
@@ -49,12 +81,12 @@ const ProductModal = ({
 }
 
 ProductModal.propTypes = {
-	product: PropTypes.object,
+	onSelectOtherProduct: PropTypes.func,
 	closeModal: PropTypes.func,
 }
 
 ProductModal.defaultProps = {
-	product: null,
+	onSelectOtherProduct: null,
 	closeModal: null,
 }
 

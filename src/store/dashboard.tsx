@@ -1,30 +1,19 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { GLASS_IMAGES, PLANT_IMAGES, productDataFormat, RING_IMAGES } from 'data/images'
-import { RootState } from './store'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { productDataFormat, productTagFormat } from 'data'
 import { fakeGetDashboard } from 'request/dashboard'
+import { DefaultAsyncStatus } from 'types'
 
 export type DashboardData = {
-	newArrivals: productDataFormat[],
-	limitedOffers: productDataFormat[],
-	rings: productDataFormat[],
-	glasses: productDataFormat[],
-	plants: productDataFormat[],
+	categories: productTagFormat[],
+	products: {[key:string]: productDataFormat[]},
 }
 
-export type DashboardStatus = {
-	loading: boolean,
-	error: string | null
-}
-
-export type DashboardState = DashboardData & DashboardStatus
+export type DashboardState = DashboardData & DefaultAsyncStatus
 
 const initialState: DashboardState = {
-	newArrivals: [],
-	limitedOffers: [],
-	rings: [],
-	glasses: [],
-	plants: [],
+	categories: ["newArrivals" , "limitedOffers", "rings", "glasses", "plants"],
+	products: { "newArrivals": [] , "limitedOffers": [], "rings": [], "glasses": [], "plants": [] },
 	loading: false,
 	error: null,
 }
@@ -56,11 +45,7 @@ export const DashboardSlice = createSlice({
 			.addCase(getDashboardNews.fulfilled, (state, action: PayloadAction<any>) => {
 				state.loading = false
 				state.error = null
-				state.newArrivals = action.payload.newArrivals
-				state.limitedOffers = action.payload.limitedOffers
-				state.rings = action.payload.rings
-				state.glasses = action.payload.glasses
-				state.plants = action.payload.plants
+				state.products = action.payload.products
 			}).addCase(getDashboardNews.rejected, (state, action: PayloadAction<any>) => {
 				state.loading = false
 				state.error = action.payload
@@ -68,11 +53,8 @@ export const DashboardSlice = createSlice({
 	}
 })
 
-export const getNewArrivals = (state: DashboardState) => state.newArrivals
-export const getLimitedOffers = (state: DashboardState) => state.limitedOffers
-export const getRings = (state: DashboardState) => state.rings
-export const getGlasses = (state: DashboardState) => state.glasses
-export const getPlants = (state: DashboardState) => state.plants
+export const getCategories = (state: DashboardState) => state.categories
+export const getProducts = (state: DashboardState) => state.products
 export const getLoading = (state: DashboardState) => state.loading
 export const getError = (state: DashboardState) => state.error
 

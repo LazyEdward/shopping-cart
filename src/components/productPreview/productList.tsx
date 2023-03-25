@@ -4,7 +4,7 @@ import CardImage from "components/card/cardImage"
 import Loader from "components/Loader"
 import Scrollable from "components/scrollable"
 import ScrollHelper from "components/scrollable/scrollHelper"
-import { productDataFormat } from "data/images"
+import { productDataFormat } from "data"
 import { useRef, useState } from "react"
 import ProductPreview from 'components/productPreview';
 import ProductModal from './productModal';

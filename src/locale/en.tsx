@@ -19,7 +19,8 @@ export const en = {
 			"cart": "Cart",
 		},
 		options: {
-			"noOptions" : "No available options"
+			"noOptions" : "No available options",
+			"more": "More ",
 		},
 	},
 	dashboard: {

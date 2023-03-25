@@ -19,7 +19,8 @@ export const ja = {
 			"cart": "カート",
 		},		
 		options: {
-			"noOptions" : "利用可能なオプションはありません"
+			"noOptions" : "利用可能なオプションはありません",
+			"more": "その他の",
 		},
 	},
 	dashboard: {

@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import AccessableSiteMapReducer from './accessableSiteMap'
 import DashboardReducer from './dashboard'
 import AllProductsReducer from './allProducts'
+import ProductDetailsReducer from './productDetails'
 
 export const store = configureStore({
   reducer: {
     accessableSiteMap: AccessableSiteMapReducer,
     dashboard: DashboardReducer,
     allProducts: AllProductsReducer,
+    productDetails: ProductDetailsReducer,
   },
 })
 

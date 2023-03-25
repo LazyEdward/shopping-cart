@@ -34,6 +34,7 @@ const RoundButton = React.forwardRef<HTMLButtonElement, RoundButtonProps>(
 				${theme}
 				${className} 
 			`}
+			disabled={disabled}
 			onClick={onClick}
 			{...rest}
 		>
