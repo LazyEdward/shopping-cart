@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import CardImage from "components/card/cardImage"
-import { productDataFormat, productTitleFormat } from "data/images"
+import { productDataFormat, productTitleFormat } from "data"
 import { useTranslation } from 'react-i18next';
 import { priceFormater } from 'utils';
 import { CartButton } from 'components/icon/cart';

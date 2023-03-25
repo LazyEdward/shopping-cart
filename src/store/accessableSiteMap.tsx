@@ -1,7 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { GLASS_IMAGES, PLANT_IMAGES, productDataFormat, RING_IMAGES } from 'data/images'
-import { RootState } from './store'
+import { createSlice } from '@reduxjs/toolkit'
 // import { fakeGetAccessableSiteMap } from 'request/AccessableSiteMap'
 
 export type AccessableSiteMapData = {

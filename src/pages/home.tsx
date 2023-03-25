@@ -1,38 +1,30 @@
 import ProductModal from "components/productPreview/productModal"
-import { productDataFormat } from "data/images"
+import { productDataFormat } from "data"
 import { useAppDispatch } from "hooks/storeTypedHook"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
-import { getDashboardNews, getError, getGlasses, getLimitedOffers, getLoading, getNewArrivals, getPlants, getRings } from "store/dashboard"
+import { getDashboardNews, getError, getProducts, getCategories, getLoading } from "store/dashboard"
 import { RootState } from "store/store"
 import ProductList from "../components/productPreview/productList"
+import { getOtherProducts, selectProduct } from "store/productDetails"
 
 const useDashboardData = () => {
 	const {
-		newArrivals,
-		limitedOffers,
-		rings,
-		glasses,
-		plants,
+		categories,
+		products,
 		loading,
 		error,
 	} = useSelector((state: RootState) => ({
-		newArrivals: getNewArrivals(state.dashboard),
-		limitedOffers: getLimitedOffers(state.dashboard),
-		rings: getRings(state.dashboard),
-		glasses: getGlasses(state.dashboard),
-		plants: getPlants(state.dashboard),
+		categories: getCategories(state.dashboard),
+		products: getProducts(state.dashboard),
 		loading: getLoading(state.dashboard),
 		error: getError(state.dashboard),
 	}))
 
 	return {
-		newArrivals,
-		limitedOffers,
-		rings,
-		glasses,
-		plants,
+		categories,
+		products,
 		loading,
 		error,
 	}
@@ -45,16 +37,24 @@ const Home = () => {
 	console.log(i18n.language)
 
 	const {
-		newArrivals,
-		limitedOffers,
-		rings,
-		glasses,
-		plants,
+		categories,
+		products,
 		loading,
 		error,
 	} = useDashboardData()
 
-	const [selectedProduct, setSelectedProduct] = useState<productDataFormat | null>(null)
+	const categoryMap = {
+		"newArrivals": products.newArrivals,
+		"limitedOffers": products.limitedOffers,
+		"rings": products.rings,
+		"glasses": products.glasses,
+		"plants": products.plants,
+	}
+
+	const selectModalProduct = (product:productDataFormat) => {
+		dispatch(selectProduct({product: product, products: categoryMap[product.tags[0] as keyof typeof categoryMap]}))
+	}
+
 
 	useEffect(() => {
 		console.log("getDashboardNews")
@@ -72,16 +72,14 @@ const Home = () => {
 				<div className="flex flex-col">
 					{/* configurable language test */}
 					{/* <ProductList title={t("test.first")} products={newArrivals} loading={loading}/> */}
-					<ProductList title={t("general.title.newArrivals")} products={newArrivals} loading={loading} onSelectProduct={(product:productDataFormat) => setSelectedProduct(product)}/>
-					<ProductList title={t("general.title.limitedOffers")} products={limitedOffers} loading={loading} onSelectProduct={(product:productDataFormat) => setSelectedProduct(product)}/>
-					<ProductList title={t("general.title.rings")} products={rings} loading={loading} onSelectProduct={(product:productDataFormat) => setSelectedProduct(product)}/>
-					<ProductList title={t("general.title.glasses")} products={glasses} loading={loading} onSelectProduct={(product:productDataFormat) => setSelectedProduct(product)}/>
-					<ProductList title={t("general.title.plants")} products={plants} loading={loading} onSelectProduct={(product:productDataFormat) => setSelectedProduct(product)}/>
+					{categories.map(category => (
+						<ProductList key={`dashboard-${category}`} title={t(`general.title.${category}`)} products={categoryMap[category]} loading={loading} onSelectProduct={(product:productDataFormat) => selectModalProduct(product)}/>
+					))}
 				</div>
 			</div>
 			<ProductModal
-				product={selectedProduct}
-				closeModal={() => setSelectedProduct(null)}
+				onSelectOtherProduct={(product) => selectModalProduct(product)}
+				closeModal={() => dispatch(selectProduct({product: null, products: []}))}
 			/>
 		</>
 	)

@@ -13,8 +13,9 @@ import { getCurrentCategory, getCurrentProducts } from "store/allProducts"
 import RoundSelect, { OptionListProps } from "components/roundSelect"
 import { useTranslation } from "react-i18next"
 import ProductPreview from "components/productPreview"
-import { productDataFormat } from "data/images"
+import { productDataFormat } from "data"
 import ProductModal from "components/productPreview/productModal"
+import { getOtherProducts, selectProduct } from "store/productDetails"
 
 const useAllProductsData = () => {
 	const {
@@ -83,7 +84,9 @@ const AllProducts = () => {
 		error,
 	} = useAllProductsData()
 
-	const [selectedProduct, setSelectedProduct] = useState<productDataFormat | null>(null)
+	const selectModalProduct = (product:productDataFormat) => {
+		dispatch(getOtherProducts({product: product}))
+	}
 
 	useEffect(() => {
 		console.log("getProducts")
@@ -118,7 +121,7 @@ const AllProducts = () => {
 										key={`${category}-${index}`}
 									>
 										{/* <CardImage src={product.img} width="300" height="200"/> */}
-										<ProductPreview className="mx-4 my-2" product={product} onSelect={(product) => setSelectedProduct(product)}/>
+										<ProductPreview className="mx-4 my-2" product={product} onSelect={(product) => selectModalProduct(product)}/>
 									</div>
 								))}
 							</div>
@@ -128,8 +131,8 @@ const AllProducts = () => {
 				</div>
 			</div>
 			<ProductModal
-				product={selectedProduct}
-				closeModal={() => setSelectedProduct(null)}
+				onSelectOtherProduct={(product) => selectModalProduct(product)}
+				closeModal={() => dispatch(selectProduct({product: null, products: []}))}
 			/>
 		</>
 	)
