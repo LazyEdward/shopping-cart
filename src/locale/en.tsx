@@ -22,12 +22,18 @@ export const en = {
 			"noOptions" : "No available options",
 			"more": "More ",
 		},
+		empty: {
+			"products": "No existing products"
+		}
 	},
 	dashboard: {
 
 	},
 	allProducts: {
 		"title": "All "
+	},
+	bookmarks: {
+		"title": "Bookmarks",
 	},
 	productDetails: {
 		"price": "Current Price:",

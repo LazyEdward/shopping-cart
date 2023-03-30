@@ -11,7 +11,9 @@ import { BookmarkButton } from 'components/icon/bookmark';
 type ProductPreviewProps = {
 	className?: string,
 	product: productDataFormat,
+	isBookmarked: boolean,
 	onSelect?: (product: productDataFormat) => void,
+	bookmarkAction?: (isBookmarked: boolean) => void,
 	width?: string,
 	height?: string,
 	[x: string]: any,
@@ -20,6 +22,8 @@ type ProductPreviewProps = {
 const ProductPreview = ({
 	className,
 	product,
+	isBookmarked,
+	bookmarkAction,
 	width,
 	height,
 	onSelect,
@@ -29,6 +33,8 @@ const ProductPreview = ({
 	const { i18n } = useTranslation()
 
 	let titleLang = "title" + i18n.language.charAt(0).toUpperCase() + i18n.language.slice(1)
+
+	console.log(bookmarkAction)
 
 	return (
 		<div
@@ -45,11 +51,15 @@ const ProductPreview = ({
 							<CartButton className="w-[25px] h-[25px]"/>
 						</div>
 					</div>
-					<div className="mt-1">
-						<div className={`bg-green-700 cursor-pointer text-white rounded-full p-1`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation()}}>
-							<BookmarkButton className="w-[25px] h-[25px]"/>
+					{!!bookmarkAction ?
+						<div className="mt-1">
+							<div className={`${isBookmarked ? "bg-red-700" : "bg-green-700"} cursor-pointer text-white rounded-full p-1`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();bookmarkAction(!isBookmarked)}}>
+								<BookmarkButton className="w-[25px] h-[25px]"/>
+							</div>
 						</div>
-					</div>
+						:
+						null
+					}
 				</div>
 			</div>
 			<div className="absolute invisible group-hover:visible rounded-b-lg bg-slate-800 bg-opacity-70 top-2/3 left-0 w-full h-1/3">
@@ -65,17 +75,21 @@ const ProductPreview = ({
 ProductPreview.propTypes = {
 	className: PropTypes.string,	
 	product: PropTypes.object,
+	isBookmarked: PropTypes.bool,
 	width: PropTypes.string,
 	height: PropTypes.string,
 	onSelect: PropTypes.func,
+	bookmarkAction: PropTypes.func,
 }
 
 ProductPreview.defaultProps = {
 	className: "",
 	product: null,
+	isBookmarked: false,
 	width: "300",
 	height: "200",
 	onSelect: null,
+	bookmarkAction: null,
 }
 
 export default ProductPreview

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import Card from 'components/card';
-import FullPageModal from 'components/FullPageModal';
+import FullPageModal from 'components/fullPageModal';
 import { CloseButton } from 'components/icon/close';
 import { productDataFormat } from "data";
 import { useSelector } from 'react-redux';

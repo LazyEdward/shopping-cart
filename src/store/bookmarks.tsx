@@ -79,7 +79,8 @@ export const Bookmarks = createSlice({
 
 export const { addBookmark, removeBookmark } = Bookmarks.actions;
 
-export const getProducts = (state: AllProductsState) => state.bookmarkIds
+export const getBookmarks = (state: AllProductsState) => state.bookmarkIds
+export const getProducts = (state: AllProductsState) => state.products
 export const getLoading = (state: AllProductsState) => state.loading
 export const getError = (state: AllProductsState) => state.error
 

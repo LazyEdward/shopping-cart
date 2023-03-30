@@ -1,7 +1,7 @@
 import Card from "components/card"
 import CardImage from "components/card/cardImage"
 import Scrollable from "components/scrollable"
-import Loader from "components/Loader"
+import Loader from "components/loader"
 import { useAppDispatch } from "hooks/storeTypedHook"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
@@ -16,6 +16,21 @@ import ProductPreview from "components/productPreview"
 import { productDataFormat } from "data"
 import ProductModal from "components/productPreview/productModal"
 import { getOtherProducts, selectProduct } from "store/productDetails"
+import { addBookmark, getBookmarks, removeBookmark } from "store/bookmarks"
+import PageLoading from "components/loader/pageLoading"
+import { NoNewProducts } from "components/warning"
+
+const useBookmarks = () => {
+	const {
+		bookmarks,
+	} = useSelector((state: RootState) => ({
+		bookmarks: getBookmarks(state.bookmarks),
+	}))
+
+	return {
+		bookmarks,
+	}
+}
 
 const useAllProductsData = () => {
 	const {
@@ -37,9 +52,6 @@ const useAllProductsData = () => {
 		error,
 	}
 }
-
-const Loading = () => <div className="p-4 w-full flex justify-center items-center"><span className="p-4 italic text-gray-500"><Loader/></span></div>
-const NoNewProducts = () => <div className="p-4 w-full flex justify-center items-center"><span className="p-4 italic text-gray-500">No existing products</span></div>
 
 const AllProducts = () => {
 	const { t, i18n } = useTranslation()
@@ -84,8 +96,19 @@ const AllProducts = () => {
 		error,
 	} = useAllProductsData()
 
+	const {
+		bookmarks,
+	} = useBookmarks()
+
 	const selectModalProduct = (product:productDataFormat) => {
 		dispatch(getOtherProducts({product: product}))
+	}
+
+	const handleBookmark = (bookmark:boolean, product:productDataFormat) => {
+		if(bookmark)
+			dispatch(addBookmark({id: product.id, product: product}))
+		else
+			dispatch(removeBookmark(product.id))
 	}
 
 	useEffect(() => {
@@ -94,6 +117,8 @@ const AllProducts = () => {
 	}, [dispatch])
 
 	console.log(category)
+
+	let bookmarksSet = new Set(bookmarks)
 
 	return (
 		<>
@@ -111,7 +136,7 @@ const AllProducts = () => {
 				</div>
 				<div className="w-full h-[calc(100%-56px)] overflow-auto">
 					{loading ?
-						<Loading/>
+						<PageLoading/>
 						:
 						products && products.length > 0 ? 
 							<div className="flex flex-wrap">
@@ -121,7 +146,7 @@ const AllProducts = () => {
 										key={`${category}-${index}`}
 									>
 										{/* <CardImage src={product.img} width="300" height="200"/> */}
-										<ProductPreview className="mx-4 my-2" product={product} onSelect={(product) => selectModalProduct(product)}/>
+										<ProductPreview isBookmarked={bookmarksSet.has(product.id)} bookmarkAction={(bookmark:boolean) => handleBookmark(bookmark, product)} className="mx-4 my-2" product={product} onSelect={(product) => selectModalProduct(product)}/>
 									</div>
 								))}
 							</div>

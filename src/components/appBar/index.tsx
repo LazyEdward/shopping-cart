@@ -1,4 +1,4 @@
-import FullPageModal from "components/FullPageModal"
+import FullPageModal from "components/fullPageModal"
 import { CloseButton } from "components/icon/close"
 import { MenuButton } from "components/icon/menu"
 import { SearchButton } from "components/icon/search"

@@ -3,6 +3,7 @@ import AccessableSiteMapReducer from './accessableSiteMap'
 import DashboardReducer from './dashboard'
 import AllProductsReducer from './allProducts'
 import ProductDetailsReducer from './productDetails'
+import BookmarksReducer from './bookmarks'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     dashboard: DashboardReducer,
     allProducts: AllProductsReducer,
     productDetails: ProductDetailsReducer,
+    bookmarks: BookmarksReducer,
   },
 })
 
