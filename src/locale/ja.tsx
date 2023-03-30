@@ -22,12 +22,18 @@ export const ja = {
 			"noOptions" : "利用可能なオプションはありません",
 			"more": "その他の",
 		},
+		empty: {
+			"products": "既存の製品はありません"
+		}
 	},
 	dashboard: {
 
 	},
 	allProducts: {
 		title: "すべての"
+	},
+	bookmarks: {
+		"title": "ブックマーク",
 	},
 	productDetails: {
 		"price": "Current Price:",

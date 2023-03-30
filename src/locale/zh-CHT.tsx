@@ -23,12 +23,18 @@ export const zhCHT = {
 			"noOptions" : "沒有可用的選項",
 			"more": "更多的",
 		},
+		empty: {
+			"products": "沒有現有產品"
+		}
 	},
 	dashboard: {
 
 	},
 	allProducts: {
 		title: "所有"
+	},
+	bookmarks: {
+		"title": "書籤",
 	},
 	productDetails: {
 		"price": "Current Price:",

@@ -8,6 +8,19 @@ import { getDashboardNews, getError, getProducts, getCategories, getLoading } fr
 import { RootState } from "store/store"
 import ProductList from "../components/productPreview/productList"
 import { getOtherProducts, selectProduct } from "store/productDetails"
+import { getBookmarks } from "store/bookmarks"
+
+const useBookmarks = () => {
+	const {
+		bookmarks,
+	} = useSelector((state: RootState) => ({
+		bookmarks: getBookmarks(state.bookmarks),
+	}))
+
+	return {
+		bookmarks,
+	}
+}
 
 const useDashboardData = () => {
 	const {
@@ -43,6 +56,10 @@ const Home = () => {
 		error,
 	} = useDashboardData()
 
+	const {
+		bookmarks,
+	} = useBookmarks()
+
 	const categoryMap = {
 		"newArrivals": products.newArrivals,
 		"limitedOffers": products.limitedOffers,
@@ -73,7 +90,7 @@ const Home = () => {
 					{/* configurable language test */}
 					{/* <ProductList title={t("test.first")} products={newArrivals} loading={loading}/> */}
 					{categories.map(category => (
-						<ProductList key={`dashboard-${category}`} title={t(`general.title.${category}`)} products={categoryMap[category]} loading={loading} onSelectProduct={(product:productDataFormat) => selectModalProduct(product)}/>
+						<ProductList bookmarks={bookmarks} key={`dashboard-${category}`} title={t(`general.title.${category}`)} products={categoryMap[category]} loading={loading} onSelectProduct={(product:productDataFormat) => selectModalProduct(product)}/>
 					))}
 				</div>
 			</div>

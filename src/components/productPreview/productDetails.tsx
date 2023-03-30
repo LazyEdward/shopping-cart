@@ -8,7 +8,23 @@ import RoundButton, { RoundButtonTheme } from 'components/roundButton';
 import { CartButton } from 'components/icon/cart';
 import { BookmarkButton } from 'components/icon/bookmark';
 import ProductList from './productList';
-import Loader from 'components/Loader';
+import Loader from 'components/loader';
+import { useSelector } from 'react-redux';
+import { addBookmark, getBookmarks, removeBookmark } from 'store/bookmarks';
+import { RootState } from 'store/store';
+import { useAppDispatch } from 'hooks/storeTypedHook';
+
+const useBookmarks = () => {
+	const {
+		bookmarks,
+	} = useSelector((state: RootState) => ({
+		bookmarks: getBookmarks(state.bookmarks),
+	}))
+
+	return {
+		bookmarks,
+	}
+}
 
 type ProductDetailsProps = {
 	className?: string,
@@ -31,8 +47,13 @@ const ProductDetails = ({
 	onSelect,
 	...rest
 }: ProductDetailsProps) => {
-
+	
+	const dispatch = useAppDispatch()
 	const { t, i18n } = useTranslation()
+
+	const {
+		bookmarks,
+	} = useBookmarks()
 
 	let titleLang = "title" + i18n.language.charAt(0).toUpperCase() + i18n.language.slice(1)
 	let descLang = "description" + i18n.language.charAt(0).toUpperCase() + i18n.language.slice(1)
@@ -42,6 +63,15 @@ const ProductDetails = ({
 	}
 
 	let filteredProductList = getFilteredProductList()
+
+	const handleBookmark = (bookmark:boolean) => {
+		if(bookmark)
+			dispatch(addBookmark({id: product.id, product: product}))
+		else
+			dispatch(removeBookmark(product.id))
+	}
+
+	let isBookmarked = bookmarks.includes(product.id)
 
 	return (
 		<div
@@ -61,13 +91,13 @@ const ProductDetails = ({
 					<span className="font-semibold">{t("productDetails.price")}</span>
 					<span className="pl-2">{priceFormater(product.pricing.price)}</span>
 				</span>
-				<RoundButton disabled={loading} className="m-2 w-[225px]">
+				<RoundButton disabled={loading} className="m-2 w-[250px]">
 					<CartButton className="w-[25px] h-[25px]"/>
 					<span className="pl-2">{t("productDetails.cart.add")}</span>
 				</RoundButton>
-				<RoundButton disabled={loading} theme={RoundButtonTheme.framed} className="m-2 w-[225px]">
+				<RoundButton disabled={loading} theme={isBookmarked ? RoundButtonTheme.removeFramed : RoundButtonTheme.framed} className="m-2 w-[250px]" onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();handleBookmark(!isBookmarked)}}>
 					<BookmarkButton className="w-[25px] h-[25px]"/>
-					<span className="pl-2">{t("productDetails.bookmarks.add")}</span>
+					<span className="pl-2">{isBookmarked ? t("productDetails.bookmarks.remove") : t("productDetails.bookmarks.add")}</span>
 				</RoundButton>
 			</div>
 			{!!product.description[descLang as keyof productDescriptionFormat] || !!product.description.descriptionEn ?
@@ -86,7 +116,7 @@ const ProductDetails = ({
 			{filteredProductList.length > 0 &&
 				<span className="w-full p-2 px-4 flex flex-col">
 					<hr/>
-					<ProductList title={`${t(`general.options.more`)}${t(`general.title.${product.tags[0]}`)}`} products={filteredProductList} onSelectProduct={onSelect ? (product:productDataFormat) => onSelect(product) : () => {}}/>
+					<ProductList bookmarks={bookmarks} title={`${t(`general.options.more`)}${t(`general.title.${product.tags[0]}`)}`} products={filteredProductList} onSelectProduct={onSelect ? (product:productDataFormat) => onSelect(product) : () => {}}/>
 				</span>
 			}
 		</div>
