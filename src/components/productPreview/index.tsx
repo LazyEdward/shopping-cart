@@ -11,8 +11,10 @@ import { BookmarkButton } from 'components/icon/bookmark';
 type ProductPreviewProps = {
 	className?: string,
 	product: productDataFormat,
+	isInCart: boolean,
 	isBookmarked: boolean,
 	onSelect?: (product: productDataFormat) => void,
+	cartAction?: () => void,
 	bookmarkAction?: (isBookmarked: boolean) => void,
 	width?: string,
 	height?: string,
@@ -22,7 +24,9 @@ type ProductPreviewProps = {
 const ProductPreview = ({
 	className,
 	product,
+	isInCart,
 	isBookmarked,
+	cartAction,
 	bookmarkAction,
 	width,
 	height,
@@ -46,11 +50,15 @@ const ProductPreview = ({
 			<CardImage src={product.img} width={width} height={height}/>
 			<div className="absolute invisible group-hover:visible bg-transparent bg-opacity-70 top-2 right-2">
 				<div className="flex flex-col">
-					<div className="">
-						<div className={`bg-green-700 cursor-pointer text-white rounded-full p-1`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation()}}>
-							<CartButton className="w-[25px] h-[25px]"/>
+					{!!cartAction ?
+						<div className="">
+							<div className={`${isInCart ? "bg-red-700" : "bg-green-700"} cursor-pointer text-white rounded-full p-1`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();cartAction()}}>
+								<CartButton className="w-[25px] h-[25px]"/>
+							</div>
 						</div>
-					</div>
+						:
+						null
+					}
 					{!!bookmarkAction ?
 						<div className="mt-1">
 							<div className={`${isBookmarked ? "bg-red-700" : "bg-green-700"} cursor-pointer text-white rounded-full p-1`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();bookmarkAction(!isBookmarked)}}>
@@ -75,20 +83,24 @@ const ProductPreview = ({
 ProductPreview.propTypes = {
 	className: PropTypes.string,	
 	product: PropTypes.object,
+	isInCart: PropTypes.bool,
 	isBookmarked: PropTypes.bool,
 	width: PropTypes.string,
 	height: PropTypes.string,
 	onSelect: PropTypes.func,
+	cartAction: PropTypes.func,
 	bookmarkAction: PropTypes.func,
 }
 
 ProductPreview.defaultProps = {
 	className: "",
 	product: null,
+	isInCart: false,
 	isBookmarked: false,
 	width: "300",
 	height: "200",
 	onSelect: null,
+	cartAction: null,
 	bookmarkAction: null,
 }
 

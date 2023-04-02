@@ -14,10 +14,12 @@ import { RootState } from 'store/store';
 import PageLoading from 'components/loader/pageLoading';
 import { NoNewProducts } from 'components/warning';
 import { useAppDispatch } from 'hooks/storeTypedHook';
+import { addToCart, removeFormCart } from 'store/cart';
 
 type ProductListProps = {
 	title?: string | null,
 	bookmarks?: string[],
+	carts?: {[key: string]: number},
 	products?: productDataFormat[],
 	onSelectProduct: (product: productDataFormat) => void,
 	loading?: boolean,
@@ -26,6 +28,7 @@ type ProductListProps = {
 const ProductList = ({
 	title,
 	bookmarks,
+	carts,
 	products,
 	onSelectProduct,
 	loading
@@ -46,14 +49,24 @@ const ProductList = ({
 			scrollRef.current.scrollLeft += 300
 	}
 
+	let bookmarksSet = new Set(bookmarks)
+
+	const handleCart = (product:productDataFormat) => {
+		if(!carts)
+			return;
+
+		if(!!carts[product.id])
+			dispatch(removeFormCart(product.id))
+		else
+			dispatch(addToCart({id: product.id, product: product}))
+	}
+
 	const handleBookmark = (bookmark:boolean, product:productDataFormat) => {
 		if(bookmark)
 			dispatch(addBookmark({id: product.id, product: product}))
 		else
 			dispatch(removeBookmark(product.id))
 	}
-
-	let bookmarksSet = new Set(bookmarks)
 
 	return (
 		<>
@@ -66,7 +79,16 @@ const ProductList = ({
 							<Scrollable ref={scrollRef} handleHorizontal={(on: boolean) => setScrollHelper(on)} className="w-full h-[230px] flex items-center overflow-x-auto">
 								{products.map((product, index) => (
 									// <CardImage key={`${title}-${index}`} src={product.img} width="300" height="200"/>
-									<ProductPreview isBookmarked={bookmarksSet.has(product.id)} bookmarkAction={(bookmark:boolean) => handleBookmark(bookmark, product)} key={`${title}-${index}`} className="mx-4 my-2" product={product} onSelect={(product) => onSelectProduct(product)}/>
+									<ProductPreview
+										key={`${title}-${index}`}
+										className="mx-4 my-2"
+										isInCart={!!carts && !!carts[product.id]}
+										cartAction={() => handleCart(product)}
+										isBookmarked={bookmarksSet.has(product.id)}
+										bookmarkAction={(bookmark:boolean) => handleBookmark(bookmark, product)}
+										product={product}
+										onSelect={(product) => onSelectProduct(product)}
+									/>
 								))}
 								{scrollHelper ?
 										<ScrollHelper
@@ -88,6 +110,7 @@ const ProductList = ({
 
 ProductList.propTypes ={
 	title: PropTypes.string,
+	carts: PropTypes.object,
 	products: PropTypes.arrayOf(PropTypes.object),
 	onSelectProduct: PropTypes.func,
 	loading: PropTypes.bool,
@@ -95,6 +118,7 @@ ProductList.propTypes ={
 
 ProductList.defaultProps ={
 	title: "",
+	carts: {},
 	products: [],
 	onSelectProduct: null,
 	loading: false,

@@ -13,6 +13,22 @@ import { useSelector } from 'react-redux';
 import { addBookmark, getBookmarks, removeBookmark } from 'store/bookmarks';
 import { RootState } from 'store/store';
 import { useAppDispatch } from 'hooks/storeTypedHook';
+import { addCartCount, addToCart, getCart, removeFormCart, subtractCartCount } from 'store/cart';
+import { MinusButton } from 'components/icon/minus';
+import { PlusButton } from 'components/icon/plus';
+import Counter from 'components/counter';
+
+const useCart = () => {
+	const {
+		productRecord,
+	} = useSelector((state: RootState) => ({
+		productRecord: getCart(state.cart),
+	}))
+
+	return {
+		productRecord,
+	}
+}
 
 const useBookmarks = () => {
 	const {
@@ -52,6 +68,10 @@ const ProductDetails = ({
 	const { t, i18n } = useTranslation()
 
 	const {
+		productRecord,
+	} = useCart()
+
+	const {
 		bookmarks,
 	} = useBookmarks()
 
@@ -64,14 +84,30 @@ const ProductDetails = ({
 
 	let filteredProductList = getFilteredProductList()
 
+	let isInCart = !!productRecord[product.id]
+	let isBookmarked = bookmarks.includes(product.id)
+
+	const onSubtractCount = (id:string) => {
+		dispatch(subtractCartCount(id))
+	}
+
+	const onAddCount = (id:string) => {
+		dispatch(addCartCount(id))
+	}
+
+	const handleCart = () => {
+		if(isInCart)
+			dispatch(removeFormCart(product.id))
+		else
+			dispatch(addToCart({id: product.id, product: product}))
+	}
+
 	const handleBookmark = (bookmark:boolean) => {
 		if(bookmark)
 			dispatch(addBookmark({id: product.id, product: product}))
 		else
 			dispatch(removeBookmark(product.id))
 	}
-
-	let isBookmarked = bookmarks.includes(product.id)
 
 	return (
 		<div
@@ -91,9 +127,21 @@ const ProductDetails = ({
 					<span className="font-semibold">{t("productDetails.price")}</span>
 					<span className="pl-2">{priceFormater(product.pricing.price)}</span>
 				</span>
-				<RoundButton disabled={loading} className="m-2 w-[250px]">
+				{isInCart ?
+						<div className="mx-2 flex items-center w-[250px]">	
+							<Counter
+								count={productRecord[product.id]}
+								canSubtract={productRecord[product.id] > 1}
+								onSubtractCount={() => onSubtractCount && onSubtractCount(product.id)}
+								onAddCount={() => onAddCount && onAddCount(product.id)}
+							/>
+						</div>
+					:
+						null
+				}
+				<RoundButton disabled={loading} theme={isInCart ? RoundButtonTheme.removeFilled : RoundButtonTheme.filled} className="m-2 w-[250px]" onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();handleCart()}}>
 					<CartButton className="w-[25px] h-[25px]"/>
-					<span className="pl-2">{t("productDetails.cart.add")}</span>
+					<span className="pl-2">{isInCart ? t("productDetails.cart.remove") : t("productDetails.cart.add")}</span>
 				</RoundButton>
 				<RoundButton disabled={loading} theme={isBookmarked ? RoundButtonTheme.removeFramed : RoundButtonTheme.framed} className="m-2 w-[250px]" onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();handleBookmark(!isBookmarked)}}>
 					<BookmarkButton className="w-[25px] h-[25px]"/>
@@ -116,7 +164,7 @@ const ProductDetails = ({
 			{filteredProductList.length > 0 &&
 				<span className="w-full p-2 px-4 flex flex-col">
 					<hr/>
-					<ProductList bookmarks={bookmarks} title={`${t(`general.options.more`)}${t(`general.title.${product.tags[0]}`)}`} products={filteredProductList} onSelectProduct={onSelect ? (product:productDataFormat) => onSelect(product) : () => {}}/>
+					<ProductList bookmarks={bookmarks} carts={productRecord} title={`${t(`general.options.more`)}${t(`general.title.${product.tags[0]}`)}`} products={filteredProductList} onSelectProduct={onSelect ? (product:productDataFormat) => onSelect(product) : () => {}}/>
 				</span>
 			}
 		</div>

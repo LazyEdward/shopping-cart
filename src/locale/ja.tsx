@@ -35,6 +35,9 @@ export const ja = {
 	bookmarks: {
 		"title": "ブックマーク",
 	},
+	cart: {
+		"title": "カート",
+	},
 	productDetails: {
 		"price": "Current Price:",
 		"description": "Description:",

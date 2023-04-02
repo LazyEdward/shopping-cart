@@ -9,9 +9,21 @@ import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { getBookmarkProducts, getBookmarks, getError, getLoading, getProducts, removeBookmark } from "store/bookmarks"
+import { addToCart, getCart, removeFormCart } from "store/cart"
 import { getOtherProducts, selectProduct } from "store/productDetails"
 import { RootState } from "store/store"
 
+const useCart = () => {
+	const {
+		productRecord,
+	} = useSelector((state: RootState) => ({
+		productRecord: getCart(state.cart),
+	}))
+
+	return {
+		productRecord,
+	}
+}
 
 const useBookmarks = () => {
 	const {
@@ -35,6 +47,10 @@ const Bookmarks = () => {
 
 	const { t, i18n } = useTranslation()
 	const dispatch = useAppDispatch()
+
+	const {
+		productRecord,
+	} = useCart()
 
 	const {
 		products,
@@ -67,7 +83,10 @@ const Bookmarks = () => {
 									<BookmarkDetails
 										key={product.id}
 										product={product}
+										inCart={!!productRecord[product.id]}
 										onSelect={(product) => selectModalProduct(product)}
+										onAddCart={(product) => dispatch(addToCart({id: product.id, product}))}
+										onRemoveCart={(id) => dispatch(removeFormCart(id))}
 										onRemove={(id) => dispatch(removeBookmark(id))}
 									/>
 								))}

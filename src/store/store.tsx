@@ -4,6 +4,7 @@ import DashboardReducer from './dashboard'
 import AllProductsReducer from './allProducts'
 import ProductDetailsReducer from './productDetails'
 import BookmarksReducer from './bookmarks'
+import CartReducer from './cart'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     allProducts: AllProductsReducer,
     productDetails: ProductDetailsReducer,
     bookmarks: BookmarksReducer,
+    cart: CartReducer,
   },
 })
 

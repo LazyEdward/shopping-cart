@@ -36,6 +36,9 @@ export const zhCHT = {
 	bookmarks: {
 		"title": "書籤",
 	},
+	cart: {
+		"title": "購物車",
+	},
 	productDetails: {
 		"price": "Current Price:",
 		"description": "Description:",

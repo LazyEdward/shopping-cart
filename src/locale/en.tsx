@@ -35,6 +35,9 @@ export const en = {
 	bookmarks: {
 		"title": "Bookmarks",
 	},
+	cart: {
+		"title": "Cart",
+	},
 	productDetails: {
 		"price": "Current Price:",
 		"description": "Description:",

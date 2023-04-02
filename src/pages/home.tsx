@@ -9,6 +9,19 @@ import { RootState } from "store/store"
 import ProductList from "../components/productPreview/productList"
 import { getOtherProducts, selectProduct } from "store/productDetails"
 import { getBookmarks } from "store/bookmarks"
+import { getCart } from "store/cart"
+
+const useCart = () => {
+	const {
+		productRecord,
+	} = useSelector((state: RootState) => ({
+		productRecord: getCart(state.cart),
+	}))
+
+	return {
+		productRecord,
+	}
+}
 
 const useBookmarks = () => {
 	const {
@@ -57,6 +70,10 @@ const Home = () => {
 	} = useDashboardData()
 
 	const {
+		productRecord,
+	} = useCart()
+
+	const {
 		bookmarks,
 	} = useBookmarks()
 
@@ -90,7 +107,7 @@ const Home = () => {
 					{/* configurable language test */}
 					{/* <ProductList title={t("test.first")} products={newArrivals} loading={loading}/> */}
 					{categories.map(category => (
-						<ProductList bookmarks={bookmarks} key={`dashboard-${category}`} title={t(`general.title.${category}`)} products={categoryMap[category]} loading={loading} onSelectProduct={(product:productDataFormat) => selectModalProduct(product)}/>
+						<ProductList bookmarks={bookmarks} carts={productRecord} key={`dashboard-${category}`} title={t(`general.title.${category}`)} products={categoryMap[category]} loading={loading} onSelectProduct={(product:productDataFormat) => selectModalProduct(product)}/>
 					))}
 				</div>
 			</div>
