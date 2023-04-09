@@ -1,10 +1,12 @@
+import { CartButton } from "components/icon/cart"
 import Loader from "components/loader"
 import PageLoading from "components/loader/pageLoading"
 import BookmarkDetails from "components/productPreview/bookmarkDetails"
 import CartDetails from "components/productPreview/cartDetails"
 import ProductModal from "components/productPreview/productModal"
+import RoundButton, { RoundButtonTheme } from "components/roundButton"
 import { NoNewProducts } from "components/warning"
-import { productDataFormat } from "data"
+import { discountTypeFormat, productDataFormat } from "data"
 import { useAppDispatch } from "hooks/storeTypedHook"
 import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
@@ -52,7 +54,16 @@ const Cart = () => {
 	}
 
 	const getTotal = () => {
-		return products.reduce((total, product) => (total + product.pricing.price * productRecord[product.id]), 0)
+		return products.reduce((total, product) => (
+				total + (
+					product.pricing.discount ? 
+						product.pricing.discount.type === discountTypeFormat.percentage ?
+							product.pricing.price * (product.pricing.discount.amount / 100)
+							: product.pricing.discount.amount 
+					: product.pricing.price
+				) * productRecord[product.id]
+			)
+		, 0)
 	}
 
 	useEffect(() => {
@@ -85,8 +96,17 @@ const Cart = () => {
 										/>
 									))}
 								</div>
-								<div className="flex border-t-2 w-full min-h-[200px] lg:w-[300px] lg:h-auto lg:border-t-0 lg:border-l-2 p-2">
-									{`total = ${priceFormater(getTotal())}`}
+								<div className="flex lg:flex-col items-center justify-between lg:justify-start lg:items-start border-t-2 w-full min-h-[150px] lg:w-[300px] lg:h-auto lg:border-t-0 lg:border-l-2 p-2">
+									<div className="p-2 flex items-center lg:justify-between text-lg w-1/2 lg:w-full">
+										<div>{`${t("cart.proceed.total")}`}</div>
+										<div className="pl-4 font-bold text-blue-900">{`${priceFormater(getTotal())}`}</div>
+									</div>
+									<div className="p-2 flex justify-end lg:justify-start">
+										<RoundButton className="m-2 w-[250px]" onClick={() => {}}>
+											<CartButton className="w-[25px] h-[25px]"/>
+											<span className="pl-2">{t("cart.proceed.button")}</span>
+										</RoundButton>
+									</div>
 								</div>
 							</div>
 						:

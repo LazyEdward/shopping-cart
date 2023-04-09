@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import CardImage from "components/card/cardImage"
-import { productDataFormat, productDescriptionFormat, productTitleFormat } from "data"
+import { productDataFormat, productDescriptionFormat, productTitleFormat, discountTypeFormat } from "data"
 import { useTranslation } from 'react-i18next';
 import { priceFormater } from 'utils';
 import RoundButton, { RoundButtonTheme } from 'components/roundButton';
@@ -125,7 +125,20 @@ const ProductDetails = ({
 				<span className="p-2 text-lg font-bold text-neutral-700">{!!product.title[titleLang as keyof productTitleFormat] ? product.title[titleLang as keyof productTitleFormat] : product.title.titleEn}</span>
 				<span className="p-2 pb-4 text-sm flex justify-between items-center">
 					<span className="font-semibold">{t("productDetails.price")}</span>
-					<span className="pl-2">{priceFormater(product.pricing.price)}</span>
+					{product.pricing.discount ? 
+							<span className="pl-2 flex items-center">
+								<span className="line-through truncate">{priceFormater(product.pricing.price)}</span>
+								<span className="pl-2 text-base font-bold text-green-700">
+									{product.pricing.discount.type === discountTypeFormat.percentage ?
+										<span>{priceFormater(product.pricing.price * (product.pricing.discount.amount / 100))}</span>
+										:
+										<span>{priceFormater(product.pricing.discount.amount)}</span>
+									}
+								</span>					
+							</span>
+						:
+							<span className="pl-2">{priceFormater(product.pricing.price)}</span>
+					}
 				</span>
 				{isInCart ?
 						<div className="mx-2 flex items-center w-[250px]">	

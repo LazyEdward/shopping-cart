@@ -37,6 +37,10 @@ export const en = {
 	},
 	cart: {
 		"title": "Cart",
+		"proceed": {
+			"total": "Total: ",
+			"button": "Buy now",
+		}
 	},
 	productDetails: {
 		"price": "Current Price:",

@@ -37,6 +37,10 @@ export const ja = {
 	},
 	cart: {
 		"title": "カート",
+		"proceed": {
+			"total": "合計: ",
+			"button": "今すぐ購入",
+		}
 	},
 	productDetails: {
 		"price": "Current Price:",

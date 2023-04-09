@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CardImage from "components/card/cardImage";
 import { CartButton } from 'components/icon/cart';
 import { CloseButton } from 'components/icon/close';
-import { productDataFormat, productDescriptionFormat, productTitleFormat } from "data";
+import { discountTypeFormat, productDataFormat, productDescriptionFormat, productTitleFormat } from "data";
 import { useTranslation } from 'react-i18next';
 import { priceFormater } from 'utils';
 
@@ -52,7 +52,20 @@ const BookmarkDetails = ({
 					<span className="p-2 pb-1 text-lg font-bold text-neutral-700 truncate">{!!product.title[titleLang as keyof productTitleFormat] ? product.title[titleLang as keyof productTitleFormat] : product.title.titleEn}</span>
 					<span className="px-2 text-sm flex items-center truncate">
 						<span className="font-semibold">{t("productDetails.price")}</span>
-						<span className="pl-2 truncate">{priceFormater(product.pricing.price)}</span>
+						{product.pricing.discount ? 
+								<span className="pl-2 flex items-center">
+									<span className="line-through truncate">{priceFormater(product.pricing.price)}</span>
+									<span className="pl-2 text-base font-bold text-green-700">
+										{product.pricing.discount.type === discountTypeFormat.percentage ?
+											<span>{priceFormater(product.pricing.price * (product.pricing.discount.amount / 100))}</span>
+											:
+											<span>{priceFormater(product.pricing.discount.amount)}</span>
+										}
+									</span>					
+								</span>
+							:
+								<span className="pl-2 truncate">{priceFormater(product.pricing.price)}</span>
+						}
 					</span>
 					{!!product.description[descLang as keyof productDescriptionFormat] || !!product.description.descriptionEn ?
 						<span className="pl-2 text-sm truncate text-gray-500">{

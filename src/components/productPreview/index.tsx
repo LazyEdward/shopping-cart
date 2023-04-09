@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import CardImage from "components/card/cardImage"
-import { productDataFormat, productTitleFormat } from "data"
+import { discountTypeFormat, productDataFormat, productTitleFormat } from "data"
 import { useTranslation } from 'react-i18next';
 import { priceFormater } from 'utils';
 import { CartButton } from 'components/icon/cart';
@@ -73,7 +73,20 @@ const ProductPreview = ({
 			<div className="absolute invisible group-hover:visible rounded-b-lg bg-slate-800 bg-opacity-70 top-2/3 left-0 w-full h-1/3">
 				<div className="w-full h-full flex justify-between px-4 items-center text-white">
 					<span>{!!product.title[titleLang as keyof productTitleFormat] ? product.title[titleLang as keyof productTitleFormat] : product.title.titleEn}</span>
-					<span className="text-sm">{priceFormater(product.pricing.price)}</span>
+					{product.pricing.discount ? 
+							<span className="pl-2 flex flex-col items-center">
+								<span className="font-bold text-green-500">
+									{product.pricing.discount.type === discountTypeFormat.percentage ?
+										<span>{priceFormater(product.pricing.price * (product.pricing.discount.amount / 100))}</span>
+										:
+										<span>{priceFormater(product.pricing.discount.amount)}</span>
+									}
+								</span>
+								<span className="line-through text-sm">{priceFormater(product.pricing.price)}</span>
+							</span>
+						:
+							<span>{priceFormater(product.pricing.price)}</span>
+					}					
 				</div>
 			</div>
 		</div>

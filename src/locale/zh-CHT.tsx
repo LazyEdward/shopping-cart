@@ -38,6 +38,10 @@ export const zhCHT = {
 	},
 	cart: {
 		"title": "購物車",
+		"proceed": {
+			"total": "總額: ",
+			"button": "立即購買",
+		}
 	},
 	productDetails: {
 		"price": "Current Price:",
