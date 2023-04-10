@@ -96,13 +96,13 @@ const Cart = () => {
 										/>
 									))}
 								</div>
-								<div className="flex lg:flex-col items-center justify-between lg:justify-start lg:items-start border-t-2 w-full min-h-[150px] lg:w-[300px] lg:h-auto lg:border-t-0 lg:border-l-2 p-2">
+								<div className="flex flex-wrap lg:flex-col items-center justify-between lg:justify-start lg:items-start border-t-2 w-full min-h-[150px] lg:w-[300px] lg:h-auto lg:border-t-0 lg:border-l-2 p-2">
 									<div className="p-2 flex items-center lg:justify-between text-lg w-1/2 lg:w-full">
 										<div>{`${t("cart.proceed.total")}`}</div>
 										<div className="pl-4 font-bold text-blue-900">{`${priceFormater(getTotal())}`}</div>
 									</div>
 									<div className="p-2 flex justify-end lg:justify-start">
-										<RoundButton className="m-2 w-[250px]" onClick={() => {}}>
+										<RoundButton className="w-[250px]" onClick={() => {}}>
 											<CartButton className="w-[25px] h-[25px]"/>
 											<span className="pl-2">{t("cart.proceed.button")}</span>
 										</RoundButton>

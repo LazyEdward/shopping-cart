@@ -75,13 +75,13 @@ const ProductList = ({
 					<PageLoading/>
 				:			
 					products && products.length > 0 ?
-						<Card className="rounded-lg relative p-4 w-full bg-white">
+						<Card className="rounded-lg relative p-3 sm:p-4 w-full bg-white">
 							<Scrollable ref={scrollRef} handleHorizontal={(on: boolean) => setScrollHelper(on)} className="w-full h-[230px] flex items-center overflow-x-auto">
 								{products.map((product, index) => (
 									// <CardImage key={`${title}-${index}`} src={product.img} width="300" height="200"/>
 									<ProductPreview
 										key={`${title}-${index}`}
-										className="mx-4 my-2"
+										className={`mx-4 my-2`}
 										isInCart={!!carts && !!carts[product.id]}
 										cartAction={() => handleCart(product)}
 										isBookmarked={bookmarksSet.has(product.id)}

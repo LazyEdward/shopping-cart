@@ -35,6 +35,16 @@ body {
 	height: 10px;
 }
 
+@media (max-width: 768px) {
+	::-webkit-scrollbar:vertical {
+		width: 1px;
+	}
+	
+	::-webkit-scrollbar:horizontal {
+		height: 1px;
+	}
+}
+
 ::-webkit-scrollbar-track {
 	border-radius: 10px;
 	background-color: var(--scrollbarBG);
