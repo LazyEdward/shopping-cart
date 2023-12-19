@@ -27,6 +27,7 @@ const CardImage = ({
 			style={{ minWidth: `${width}px`, minHeight: `${height}px` }}
 			src={src}
 			alt="Image not found"
+			draggable={false}
 		/>
 	</Card>
 )

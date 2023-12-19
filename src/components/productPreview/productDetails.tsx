@@ -141,7 +141,7 @@ const ProductDetails = ({
 					}
 				</span>
 				{isInCart ?
-						<div className="mx-2 flex items-center w-[250px]">	
+						<div className="mx-2 mb-2 flex items-center w-[250px]">	
 							<Counter
 								count={productRecord[product.id]}
 								canSubtract={productRecord[product.id] > 1}

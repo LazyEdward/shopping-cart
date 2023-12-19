@@ -16,6 +16,7 @@ const Card = React.forwardRef<HTMLDivElement,CardProps>(
 	} : CardProps, ref) => (
 		<div
 			ref={ref}
+			data-testid={`components-card`}
 			className={`shadow-md ${className}`}
 			{...rest}
 		>

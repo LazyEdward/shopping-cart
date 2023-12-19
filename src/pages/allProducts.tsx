@@ -2,7 +2,7 @@ import PageLoading from "components/loader/pageLoading"
 import ProductPreview from "components/productPreview"
 import ProductModal from "components/productPreview/productModal"
 import RoundSelect, { OptionListProps } from "components/roundSelect"
-import { NoNewProducts } from "components/warning"
+import Warning from 'components/warning';
 import { productDataFormat } from "data"
 import { useAppDispatch } from "hooks/storeTypedHook"
 import { useEffect } from "react"
@@ -179,7 +179,7 @@ const AllProducts = () => {
 								))}
 							</div>
 						:
-							<NoNewProducts/>
+							<Warning warningMessage={`general.empty.products`}/>
 					}
 				</div>
 			</div>

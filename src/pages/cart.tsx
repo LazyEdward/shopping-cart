@@ -5,7 +5,7 @@ import BookmarkDetails from "components/productPreview/bookmarkDetails"
 import CartDetails from "components/productPreview/cartDetails"
 import ProductModal from "components/productPreview/productModal"
 import RoundButton, { RoundButtonTheme } from "components/roundButton"
-import { NoNewProducts } from "components/warning"
+import Warning from 'components/warning';
 import { discountTypeFormat, productDataFormat } from "data"
 import { useAppDispatch } from "hooks/storeTypedHook"
 import { useEffect } from "react"
@@ -110,7 +110,7 @@ const Cart = () => {
 								</div>
 							</div>
 						:
-							<NoNewProducts/>
+							<Warning warningMessage={`general.empty.products`}/>
 					}
 				</div>
 			</div>

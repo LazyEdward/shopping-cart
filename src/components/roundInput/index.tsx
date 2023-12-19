@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
+import Loader from "components/loader";
 
 type RoundInputProps = {
 	className?: string,
@@ -18,7 +19,7 @@ const RoundInput = React.forwardRef<HTMLInputElement, RoundInputProps>(
 		...rest
 	}: RoundInputProps, ref) => (
 		<div
-			className={`flex justify-center items-center rounded-full bg-slate-300 text-sm text-black h-9 ${className}`}
+			className={`relative flex justify-center items-center rounded-full bg-slate-300 text-sm text-black h-9 ${className}`}
 		>
 			<input
 				ref={ref}

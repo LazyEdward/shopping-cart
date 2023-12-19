@@ -1,4 +1,4 @@
-import { productDataFormat, productTagFormat, PRODUCT_DATA } from "data"
+import { productDataFormat, productTagFormat, PRODUCT_DATA, productTitleFormat, productDescriptionFormat } from "data"
 
 export const fakeGetProducts = (categories: productTagFormat[], maxRows:number=0) => {
 	return new Promise((resolve, reject) => {
@@ -9,6 +9,24 @@ export const fakeGetProducts = (categories: productTagFormat[], maxRows:number=0
 
 			console.log(products)
 			resolve({category: categories, products: products})
+		}, 500)
+	})
+}
+
+export const fakeGetProductsBySearch = (input: string, titleLang: string, descLang: string, maxRows:number=0) => {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			let products: productDataFormat[] = []
+
+			PRODUCT_DATA.forEach(product => {
+				if(
+					product.title[titleLang as keyof productTitleFormat]?.toLocaleLowerCase().includes(input.toLocaleLowerCase())
+					|| product.description[descLang as keyof productDescriptionFormat]?.toLocaleLowerCase().includes(input.toLocaleLowerCase())
+				)
+					products.push(product)
+			})
+
+			resolve({products: products.splice(0, maxRows)})
 		}, 500)
 	})
 }

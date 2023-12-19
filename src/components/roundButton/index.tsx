@@ -28,6 +28,7 @@ const RoundButton = React.forwardRef<HTMLButtonElement, RoundButtonProps>(
 	}: RoundButtonProps, ref) => (
 		<button
 			ref={ref}
+			data-testid={`components-roundButton`}
 			className={`
 				flex justify-center items-center rounded-full 
 				text-sm h-9 truncate outline-none

@@ -5,9 +5,11 @@ import AllProductsReducer from './allProducts'
 import ProductDetailsReducer from './productDetails'
 import BookmarksReducer from './bookmarks'
 import CartReducer from './cart'
+import AppbarReducer from './appBar'
 
 export const store = configureStore({
   reducer: {
+    appBar: AppbarReducer,
     accessableSiteMap: AccessableSiteMapReducer,
     dashboard: DashboardReducer,
     allProducts: AllProductsReducer,

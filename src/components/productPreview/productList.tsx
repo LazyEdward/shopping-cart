@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { addBookmark, getBookmarks, removeBookmark } from 'store/bookmarks';
 import { RootState } from 'store/store';
 import PageLoading from 'components/loader/pageLoading';
-import { NoNewProducts } from 'components/warning';
+import Warning from 'components/warning';
 import { useAppDispatch } from 'hooks/storeTypedHook';
 import { addToCart, removeFormCart } from 'store/cart';
 
@@ -101,7 +101,7 @@ const ProductList = ({
 							</Scrollable>
 						</Card>
 					:
-						<NoNewProducts/>
+						<Warning warningMessage={`general.empty.products`}/>
 			}
 		</>
 	)

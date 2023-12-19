@@ -8,7 +8,7 @@ type LoaderProps = {
 const Loader = ({
 	width,
 }: LoaderProps) => (
-	<div className={`dots-3 ${width}`}></div>
+	<div data-testid={'components-loader'} className={`dots-3 ${width}`}></div>
 )
 
 Loader.propTypes = {

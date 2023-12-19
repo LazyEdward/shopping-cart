@@ -1,7 +1,12 @@
 
 import { useForwardRef } from 'hooks/useForwardRef';
 import PropTypes from 'prop-types';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+type DragCoord = {
+	x: number,
+	y: number,
+}
 
 type CardProps = {
 	className?: string,
@@ -19,6 +24,8 @@ const Scrollable = React.forwardRef<HTMLDivElement, CardProps>(
 		children,
 		...rest
 	} : CardProps, ref) => {
+
+	let dragControl : DragCoord | null = null;
 
 	const scrollRef = useForwardRef<HTMLDivElement>(ref)
 
@@ -39,6 +46,25 @@ const Scrollable = React.forwardRef<HTMLDivElement, CardProps>(
 		if(handleVertical)
 			handleVertical(false)
 	}
+
+	const wheelListener = (e: WheelEvent) => {
+		if(scrollRef.current.scrollWidth > scrollRef.current.clientWidth){
+			e.preventDefault();
+			scrollRef.current.scrollBy(e.deltaY * scrollRef.current.clientWidth / scrollRef.current.clientHeight, 0);
+		}
+	}
+
+	useEffect(() => {
+		if(scrollRef.current){
+			scrollRef.current.addEventListener('wheel', wheelListener);
+		}
+
+		return () => {
+			if(scrollRef.current)
+				scrollRef.current.removeEventListener('wheel', wheelListener);
+		}
+
+	}, [ref])
 
 	return (
 		<div

@@ -16,23 +16,30 @@ const Counter = ({
 	canAdd,
 	onSubtractCount,
 	onAddCount
-}: CounterProps) => (
-	<>
-		<div className="mx-1">
-			<div className={`border-red-700 border-2 text-red-700 rounded-full p-[2px] ${canSubtract ? "cursor-pointer" : "opacity-50"}`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();if(!!onSubtractCount && canSubtract)onSubtractCount()}}>
-				<MinusButton className="w-[20px] h-[20px]"/>
+}: CounterProps) => {
+
+	const handleAdd = () => {
+		
+	}
+
+	return (
+		<>
+			<div className="mx-1">
+				<div data-testid="components-counter-subtract" className={`border-red-700 border-2 text-red-700 rounded-full p-[2px] ${canSubtract ? "cursor-pointer" : "opacity-50"}`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();if(!!onSubtractCount && canSubtract)onSubtractCount()}}>
+					<MinusButton className="w-[20px] h-[20px]"/>
+				</div>
 			</div>
-		</div>
-		<div className="mx-1 text-sm">
-			{count}
-		</div>
-		<div className="mx-1">
-			<div className={`bg-green-700 text-white rounded-full p-1 ${canAdd ? "cursor-pointer" : "opacity-50"}`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();if(!!onAddCount && canAdd)onAddCount()}}>
-				<PlusButton className="w-[20px] h-[20px]"/>
+			<div data-testid="components-counter-value" className="mx-1 text-sm">
+				{count}
 			</div>
-		</div>
-	</>
-)
+			<div className="mx-1">
+				<div data-testid="components-counter-add" className={`bg-green-700 text-white rounded-full p-1 ${canAdd ? "cursor-pointer" : "opacity-50"}`} onClick={(e:React.MouseEvent|React.TouchEvent) => {e.stopPropagation();if(!!onAddCount && canAdd)onAddCount()}}>
+					<PlusButton className="w-[20px] h-[20px]"/>
+				</div>
+			</div>
+		</>
+	)
+}
 
 Counter.propTypes = {
 	count: PropTypes.number,

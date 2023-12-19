@@ -14,7 +14,7 @@ export const zhCHT = {
 			"plants" : "植物",
 		},
 		navigation: {
-			// "home": "主頁",
+			"home": "主頁",
 			"allProducts": "所有產品",
 			"bookmarks": "書籤",
 			"cart": "購物車",

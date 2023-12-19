@@ -13,7 +13,7 @@ export type AccessableSiteMapStatus = {
 export type AccessableSiteMapState = AccessableSiteMapData & AccessableSiteMapStatus
 
 const initialState: AccessableSiteMapState = {
-	sites: ["allProducts", "bookmarks", "cart"],
+	sites: ["home", "allProducts", "bookmarks", "cart"],
 	loading: false,
 	error: null,
 }

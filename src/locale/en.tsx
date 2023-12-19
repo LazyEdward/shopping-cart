@@ -13,7 +13,7 @@ export const en = {
 			"plants" : "Plants",
 		},
 		navigation: {
-			// "home": "Home",
+			"home": "Home",
 			"allProducts": "All Products",
 			"bookmarks": "Bookmarks",
 			"cart": "Cart",

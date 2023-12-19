@@ -13,7 +13,7 @@ export const ja = {
 			"plants" : "植物",
 		},
 		navigation: {
-			// "home": "ホームページ",
+			"home": "ホーム",
 			"allProducts": "すべての商品",
 			"bookmarks": "ブックマーク",
 			"cart": "カート",

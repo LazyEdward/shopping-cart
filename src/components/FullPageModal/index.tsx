@@ -21,7 +21,7 @@ const FullPageModal = ({
 	return (
 		active && element ?
 			createPortal(
-				<div className={`absolute w-full h-full top-0 left-0 bg-black bg-opacity-50 ${level}`}>
+				<div data-testid={`components-fullPageModal`} className={`absolute w-full h-full top-0 left-0 bg-black bg-opacity-50 ${level}`}>
 					{children}
 				</div>
 				,
