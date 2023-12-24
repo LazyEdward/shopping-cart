@@ -81,18 +81,19 @@ const RoundSelect = React.forwardRef<HTMLDivElement, RoundSelectProps>(
 			<div
 				ref={ref}
 				tabIndex={0}
+				data-testid={`components-roundSelect`} 
 				className={`relative flex justify-center items-center rounded-full outline-none bg-slate-300 text-sm text-black h-9 ${className}`}
-				onClick={() => console.log("test")}
+				// onClick={() => console.log("test")}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
 				{...rest}				
 			>
 				<div className={`w-full z-[2] truncate bg-transparent outline-none mx-6 ${value ? "text-black" : "text-slate-500"} `}>
-					<div className="flex justify-between items-center">
+					<div data-testid={`components-roundSelect-current`} className="flex justify-between items-center">
 						<span>{value ? getLabelFromOption(value) : placeholder}</span>
 						{showOptions ? <UpButton className="w-[15px] h-[15px]"/> : <DownButton className="w-[15px] h-[15px]"/>}
 					</div>
-					<div className={`absolute w-full z-[2] min-h-[0px] max-h-[50vh] left-0 ${showAbove ? "bottom-full" : "top-full"} ${showOptions ? "flex" : "hidden"}`}>
+					<div data-testid={`components-roundSelect-options`} className={`absolute w-full z-[2] min-h-[0px] max-h-[50vh] left-0 ${showAbove ? "bottom-full" : "top-full"} ${showOptions ? "flex" : "hidden"}`}>
 						<div className="mx-2 w-full flex flex-col bg-white shadow-md overflow-auto text-black">
 							{/* option elements */}
 							{options && options?.length > 0 ?

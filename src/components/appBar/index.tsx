@@ -62,6 +62,11 @@ const AppBar = () => {
 		setOpenMenu(false)
 	}
 
+	const toAllProducts = () => {
+		navigate("allProducts")
+		setOpenSearch(false)
+	}
+
 	const selectModalProduct = (product:productDataFormat) => {
 		dispatch(getOtherProducts({product: product}))
 	}
@@ -70,8 +75,11 @@ const AppBar = () => {
 		if(count > 3)
 			return 'h-[80vh]'
 
-		if(count < 1)
-			return 'h-[25vh]'
+		if(count < 1){
+			if(searchInput.length > 0)
+				return 'h-[35vh]'
+			return 'h-[17vh]'
+		}
 
 		return `h-[${count * 32}vh]`
 	}
@@ -93,7 +101,16 @@ const AppBar = () => {
 	useEffect(() => {
 		if(!openSearch)
 			setSearchInput('')
-	}, [dispatch, openSearch])
+		else
+			setOpenMenu(false)
+	}, [openSearch])
+
+	useEffect(() => {
+		if(openMenu){
+			setSearchInput('')
+			setOpenSearch(false)
+		}
+	}, [openMenu])
 
 	return (
 		<div className={`
@@ -127,9 +144,21 @@ const AppBar = () => {
 										onSelect={selectModalProduct}
 									></ProductListInDetails>
 								))}
-								{products.length < 1 &&
+								{searchInput.length > 0 && products.length < 1 &&
 									<Warning warningMessage={`general.options.noOptions`}/>
 								}
+								{searchInput.length > 0 && <div className="w-full"><hr className='m-2 border-gray-500'/></div>}
+								<div
+									className={`relative w-full h-hull flex items-center bg-transparent group hover:bg-slate-300 cursor-pointer rounded text-gray-500`}
+									onClick={toAllProducts}
+								>
+									<div className="flex items-center overflow-hidden pl-4">
+										<SearchButton className="w-[25px] h-[25px]"/>
+										<span className="p-2 text-lg font-bold text-neutral-700 truncate">
+											{t(`general.search.suggestion`)}
+										</span>
+									</div>
+								</div>
 							</SearchContainer>
 						}
 					</SearchBar>

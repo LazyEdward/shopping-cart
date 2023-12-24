@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import Loader from "components/loader";
 
 type RoundInputProps = {
 	className?: string,
@@ -23,6 +22,7 @@ const RoundInput = React.forwardRef<HTMLInputElement, RoundInputProps>(
 		>
 			<input
 				ref={ref}
+				data-testid={`components-roundInput`}
 				className="w-full truncate bg-transparent outline-none mx-6 placeholder:text-slate-500"
 				placeholder={placeholder}
 				value={value}

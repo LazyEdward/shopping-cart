@@ -11,17 +11,20 @@
 //   plugins: [react(), tsconfigPaths()],
 // })
 
-import { defineConfig as defineViteConfig, mergeConfig } from 'vite';
+import { defineConfig as defineViteConfig, mergeConfig, transformWithEsbuild } from 'vite';
 import { defineConfig as defineVitestConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 const viteConfig = defineViteConfig({
-  base: "/shopping-cart/",
-  server: {
-    port: 3333,
-  },
-  plugins: [react({fastRefresh: false}), tsconfigPaths()],
+	base: "/shopping-cart/",
+	server: {
+		port: 3333,
+	},
+	plugins: [
+		react({ fastRefresh: false }),
+		tsconfigPaths()
+	]
 });
 
 const vitestConfig = defineVitestConfig({

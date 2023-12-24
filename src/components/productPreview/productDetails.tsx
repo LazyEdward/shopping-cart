@@ -111,7 +111,7 @@ const ProductDetails = ({
 
 	return (
 		<div
-			className={`relative w-full h-hull flex flex-wrap ${className}`}
+			className={`relative w-full h-hull flex flex-wrap justify-center ${className}`}
 			// onClick={onSelect ? () => onSelect(product) : () => {}}
 			{...rest}
 		>

@@ -1,6 +1,7 @@
 import { CartButton } from "components/icon/cart"
 import Loader from "components/loader"
 import PageLoading from "components/loader/pageLoading"
+import PaymentModal from "components/paymentPreview/paymentModal"
 import BookmarkDetails from "components/productPreview/bookmarkDetails"
 import CartDetails from "components/productPreview/cartDetails"
 import ProductModal from "components/productPreview/productModal"
@@ -8,7 +9,7 @@ import RoundButton, { RoundButtonTheme } from "components/roundButton"
 import Warning from 'components/warning';
 import { discountTypeFormat, productDataFormat } from "data"
 import { useAppDispatch } from "hooks/storeTypedHook"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { getProducts, getCartProducts, getError, getLoading, getCart, removeFormCart, addCartCount, subtractCartCount } from "store/cart"
@@ -41,6 +42,8 @@ const Cart = () => {
 
 	const { t, i18n } = useTranslation()
 	const dispatch = useAppDispatch()
+
+	const [showPaymentPanel, setShowPaymentPanel] = useState(false)
 
 	const {
 		productRecord,
@@ -102,7 +105,7 @@ const Cart = () => {
 										<div className="pl-4 font-bold text-blue-900">{`${priceFormater(getTotal())}`}</div>
 									</div>
 									<div className="p-2 flex justify-end lg:justify-start">
-										<RoundButton className="w-[250px]" onClick={() => {}}>
+										<RoundButton className="w-[250px]" onClick={() => setShowPaymentPanel(true)}>
 											<CartButton className="w-[25px] h-[25px]"/>
 											<span className="pl-2">{t("cart.proceed.button")}</span>
 										</RoundButton>
@@ -117,6 +120,11 @@ const Cart = () => {
 			<ProductModal
 				onSelectOtherProduct={(product) => selectModalProduct(product)}
 				closeModal={() => dispatch(selectProduct({product: null, products: []}))}
+			/>
+			<PaymentModal
+				show={showPaymentPanel}
+				total={getTotal()}
+				closeModal={() => setShowPaymentPanel(false)}
 			/>
 		</>
 	)
