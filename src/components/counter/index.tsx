@@ -18,10 +18,6 @@ const Counter = ({
 	onAddCount
 }: CounterProps) => {
 
-	const handleAdd = () => {
-		
-	}
-
 	return (
 		<>
 			<div className="mx-1">

@@ -5,6 +5,7 @@ module.exports = {
   purge: [
     './public/**/*.html',
     './src/**/*.{js,jsx,ts,tsx,vue}',
+    './storybook/**/*.{js,jsx,ts,tsx,vue}',
   ],
   theme: {
     extend: {},
