@@ -2,16 +2,22 @@ import type { Meta, StoryObj } from "@storybook/react";
 import RoundInput from "."
 import { useArgs } from '@storybook/preview-api';
 
+/** 
+ * `RoundInput` component example
+ */
 const meta: Meta = {
-  title: "Components/RoundInput",
-  component: RoundInput,
-  args: { ...RoundInput.defaultProps },
+	title: "Components/RoundInput",
+	component: RoundInput,
+	args: { ...RoundInput.defaultProps },
 };
 
 export default meta
 
 type Story = StoryObj<typeof RoundInput>;
 
+/** 
+ * `RoundInput` component default example
+ */
 export const Default: Story = {
 	args: {
 		className: "w-[250px]",
@@ -25,13 +31,16 @@ export const Default: Story = {
 			<div className="flex items-center">
 				<RoundInput
 					{...args}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateArgs({value: e.target.value})}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateArgs({ value: e.target.value })}
 				/>
 			</div>
 		)
 	}
 }
 
+/** 
+ * `RoundInput` component disabled example
+ */
 export const Disabled: Story = {
 	args: {
 		className: "w-[250px]",
@@ -46,7 +55,7 @@ export const Disabled: Story = {
 			<div className="flex items-center">
 				<RoundInput
 					{...args}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateArgs({value: e.target.value})}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateArgs({ value: e.target.value })}
 				/>
 			</div>
 		)

@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 
 type RoundInputProps = {
 	disabled: boolean,
+	/** `RoundInput` input override style */
 	className?: string,
+	/** `RoundInput` input placeholder text */
 	placeholder?: string,
+	/** `RoundInput` input value */
 	value?: string,
+	/** `RoundInput` input `onchange` action */
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>, ...rest: any) => void,
 	[x:string]: any
 }
@@ -50,5 +54,7 @@ RoundInput.defaultProps = {
 	value: undefined,
 	onChange: null,
 }
+
+RoundInput.displayName = 'RoundInput'
 
 export default RoundInput;

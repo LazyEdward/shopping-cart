@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 type CardProps = {
+	/** `Card` container style */
 	className?: string,
+	/** Children in `Card` container */
 	children?: React.ReactNode,
+	/** Extra properties */
 	[x:string]: any
 }
 
@@ -33,5 +36,7 @@ Card.defaultProps = {
 	className: "",
 	children: null,
 }
+
+Card.displayName = 'Card'
 
 export default Card

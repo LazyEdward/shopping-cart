@@ -10,9 +10,13 @@ export const RoundButtonTheme = Object.freeze({
 
 type RoundButtonProps = {
 	disabled: boolean,
+	/** `RoundButton` button style */
 	theme: typeof RoundButtonTheme,
+	/** `RoundButton` button extra/override style */
 	className?: string,
+	/** `RoundButton` content (text, icon...) */
 	children?: React.ReactNode,
+	/** `RoundButton` button `onclick` action */
 	onClick?: (e: React.MouseEvent | React.TouchEvent<HTMLButtonElement>, ...rest: any) => void,
 	[x:string]: any
 }
@@ -58,5 +62,7 @@ RoundButton.defaultProps = {
 	children: null,
 	onClick: null,
 }
+
+RoundButton.displayName = 'RoundButton'
 
 export default RoundButton;

@@ -2,11 +2,16 @@ import { MinusButton } from 'components/icon/minus';
 import { PlusButton } from 'components/icon/plus';
 import PropTypes from 'prop-types';
 
-type CounterProps = {
+export type CounterProps = {
+	/** `Count` value */
 	count: number,
+	/** `Count` constraint on subtraction */
 	canSubtract: boolean,
+	/** `Count` constraint on add */
 	canAdd: boolean,
+	/** `Count` subtraction action */
 	onSubtractCount: () => void,
+	/** `Count` add action */
 	onAddCount: () => void,
 }
 
@@ -52,5 +57,7 @@ Counter.defaultProps = {
 	onSubtractCount: null,
 	onAddCount: null,
 }
+
+Counter.displayName = 'Counter'
 
 export default Counter
